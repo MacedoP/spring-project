@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 
 /*
     Nesta classe vamos criar um control dos nossos produtos
@@ -22,13 +24,19 @@ public class ProductController {
     @Autowired
     ProductRepository productRepository;
 
-    @PostMapping("/products")//isto esta sendo usado para pegar os valores passados dentro do postman
-    public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecorDto productRecorDto){
+    @PostMapping("/products")
+    public ResponseEntity<ProductModel> saveProduct(@RequestBody @Valid ProductRecorDto productRecordDto) {
         var productModel = new ProductModel();
-        BeanUtils.copyProperties(productRecorDto, productModel);//O que vai ser convertido e o tipo no qual sera convertido
+        BeanUtils.copyProperties(productRecordDto, productModel);
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
-
-
     }
+
+
+    @GetMapping("/products")
+    //Este metodo tem como funcaao mostrar todos os produtos salvos na nossa base de dados
+    public ResponseEntity<List<ProductModel>> getAllProducts(){
+        return ResponseEntity.status(HttpStatus.OK).body(productRepository.findAll());
+    }
+
 
 }
