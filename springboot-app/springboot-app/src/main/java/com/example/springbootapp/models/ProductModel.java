@@ -1,6 +1,7 @@
 package com.example.springbootapp.models;
 
 import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "TB_PRODUCTS") //VIA DE CONEXAO COM A NOSSA TABELA DENTRO DA NOSSA BASE DE DADOS, a tabela foi criada aprtir daqui
 
-public class ProductModel implements Serializable{
+public class ProductModel extends RepresentationModel<ProductModel> implements Serializable{
     /*
     NESTA CLASSE CRIAMOS O MODELO DE NOSSOS PRODUTOS
     * */
