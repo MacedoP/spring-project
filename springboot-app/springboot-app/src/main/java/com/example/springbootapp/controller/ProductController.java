@@ -55,8 +55,10 @@ public class ProductController {
                     if(productO.isEmpty()) {
                         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found.");
         }
+        productO.get().add(linkTo(methodOn(ProductController.class).getAllProducts()).withRel("Products List"));;
         return ResponseEntity.status(HttpStatus.OK).body(productO.get());
     }
+
     @PutMapping("/products/{id}") //UPDATE ONE or ALL
     //Este metodo nos permite actualizar os nosso produtos pelo id do produto
 
