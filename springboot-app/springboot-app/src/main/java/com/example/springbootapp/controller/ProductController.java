@@ -27,8 +27,6 @@ public class ProductController {
         var productModel = new ProductModel();
         BeanUtils.copyProperties(productRecorDto, productModel);//O que vai ser convertido e o tipo no qual sera convertido
         return ResponseEntity.status(HttpStatus.CREATED).body(productRepository.save(productModel));
-
-
     }
 
 }
