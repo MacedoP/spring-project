@@ -25,7 +25,7 @@ public class ProductModel extends RepresentationModel<ProductModel> implements S
 
     private UUID idProduct; //UUID identificadores
     private String name;
-    private BigDecimal value;
+    private BigDecimal price;
 
     public UUID getIdProduct() {
         return idProduct;
@@ -40,9 +40,9 @@ public class ProductModel extends RepresentationModel<ProductModel> implements S
         this.name = name;
     }
     public BigDecimal getValue() {
-        return value;
+        return price;
     }
     public void setValue(BigDecimal value) {
-        this.value = value;
+        this.price = value;
     }
 }
