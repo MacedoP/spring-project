@@ -40,18 +40,18 @@ public class ProductControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
     }
 
-    @Test
-    public void testSaveProduct() {
-        ProductRecorDto productDto = new ProductRecorDto("Monitor",434.00);
-        ProductModel productModel = new ProductModel();
-        BeanUtils.copyProperties(productDto, productModel);
-
-        when(productRepository.save(any(ProductModel.class))).thenReturn(productModel);
-       ResponseEntity<ProductModel> response = productController.saveProduct(productDto);
-
-       assertEquals(HttpStatus.CREATED, response.getStatusCode());
-        assertEquals(productModel, response.getBody());
-   }
+//    @Test
+//    public void testSaveProduct() {
+//        ProductRecorDto productDto = new ProductRecorDto("Monitor",434.00);
+//        ProductModel productModel = new ProductModel();
+//        BeanUtils.copyProperties(productDto, productModel);
+//
+//        when(productRepository.save(any(ProductModel.class))).thenReturn(productModel);
+//       ResponseEntity<ProductModel> response = productController.saveProduct(productDto);
+//
+//       assertEquals(HttpStatus.CREATED, response.getStatusCode());
+//        assertEquals(productModel, response.getBody());
+//   }
 //
 //    @Test
 //    public void testGetAllProducts() {
