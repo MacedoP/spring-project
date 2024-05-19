@@ -25,7 +25,7 @@ public class ProductModel extends RepresentationModel<ProductModel> implements S
 
     private UUID idProduct; //UUID identificadores
     private String name;
-    private BigDecimal price;
+    private BigDecimal value;
 
     public UUID getIdProduct() {
         return idProduct;
