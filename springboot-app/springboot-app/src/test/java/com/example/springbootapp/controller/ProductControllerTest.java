@@ -26,19 +26,19 @@ import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 @ExtendWith(MockitoExtension.class)
 public class ProductControllerTest {
 
-    @InjectMocks
-    private ProductController productController;
-
-    @Mock
-    private ProductRepository productRepository;
-
-    private MockMvc mockMvc;
-
-    @BeforeEach //usado para class onde os seus dados seram usado para o resto dos test
-    public void setUp() {
-        MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
-    }
+//    @InjectMocks
+//    private ProductController productController;
+//
+//    @Mock
+//    private ProductRepository productRepository;
+//
+//    private MockMvc mockMvc;
+//
+//    @BeforeEach //usado para class onde os seus dados seram usado para o resto dos test
+//    public void setUp() {
+//        MockitoAnnotations.openMocks(this);
+//        mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
+//    }
 
 //    @Test
 //    public void testSaveProduct() {

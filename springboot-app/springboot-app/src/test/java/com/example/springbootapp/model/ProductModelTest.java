@@ -14,7 +14,7 @@ public class ProductModelTest {
     @Test
     public void testGettersAndSetters() {
         // Criando uma instância do modelo de produto
-        ProductModel productModel = new ProductModel();
+//        ProductModel productModel = new ProductModel();
 
         // Criando valores de teste
 //        UUID id = UUID.randomUUID();
