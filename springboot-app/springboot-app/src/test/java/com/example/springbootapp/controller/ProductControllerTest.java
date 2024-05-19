@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
@@ -33,25 +34,24 @@ public class ProductControllerTest {
 
     private MockMvc mockMvc;
 
-    @BeforeEach
+    @BeforeEach //usado para class onde os seus dados seram usado para o resto dos test
     public void setUp() {
         MockitoAnnotations.openMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
     }
 
-//    @Test
-//    public void testSaveProduct() {
-//        ProductRecorDto productDto = new ProductRecorDto();
-//        ProductModel productModel = new ProductModel();
-//        BeanUtils.copyProperties(productDto, productModel);
-//
-//        when(productRepository.save(any(ProductModel.class))).thenReturn(productModel);
-//
-//        ResponseEntity<ProductModel> response = productController.saveProduct(productDto);
-//
-//        assertEquals(HttpStatus.CREATED, response.getStatusCode());
-//        assertEquals(productModel, response.getBody());
-//    }
+    @Test
+    public void testSaveProduct() {
+        ProductRecorDto productDto = new ProductRecorDto("Monitor",434.00);
+        ProductModel productModel = new ProductModel();
+        BeanUtils.copyProperties(productDto, productModel);
+
+        when(productRepository.save(any(ProductModel.class))).thenReturn(productModel);
+       ResponseEntity<ProductModel> response = productController.saveProduct(productDto);
+
+       assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(productModel, response.getBody());
+   }
 //
 //    @Test
 //    public void testGetAllProducts() {
@@ -144,5 +144,5 @@ public class ProductControllerTest {
 //        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
 //        assertEquals("Product not found.", response.getBody());
 //    }
-    
+
 }
