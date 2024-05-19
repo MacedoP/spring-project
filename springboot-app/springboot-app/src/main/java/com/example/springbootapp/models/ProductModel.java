@@ -40,9 +40,9 @@ public class ProductModel extends RepresentationModel<ProductModel> implements S
         this.name = name;
     }
     public BigDecimal getValue() {
-        return price;
+        return value;
     }
     public void setValue(BigDecimal value) {
-        this.price = value;
+        this.value = value;
     }
 }
