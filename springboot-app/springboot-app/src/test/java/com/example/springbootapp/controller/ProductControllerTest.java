@@ -1,148 +1,125 @@
 package com.example.springbootapp.controller;
 
-
+import com.example.springbootapp.controller.ProductController;
 import com.example.springbootapp.datatranferobject.ProductRecorDto;
 import com.example.springbootapp.models.ProductModel;
 import com.example.springbootapp.repositories.ProductRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 
-@ExtendWith(MockitoExtension.class)
+@SpringBootTest
 public class ProductControllerTest {
 
-//    @InjectMocks
-//    private ProductController productController;
-//
-//    @Mock
-//    private ProductRepository productRepository;
-//
-//    private MockMvc mockMvc;
-//
-//    @BeforeEach //usado para class onde os seus dados seram usado para o resto dos test
-//    public void setUp() {
-//        MockitoAnnotations.openMocks(this);
-//        mockMvc = MockMvcBuilders.standaloneSetup(productController).build();
-//    }
+    @Mock
+    private ProductRepository productRepositoryMock;
 
-//    @Test
-//    public void testSaveProduct() {
-//        ProductRecorDto productDto = new ProductRecorDto("Monitor",434.00);
-//        ProductModel productModel = new ProductModel();
-//        BeanUtils.copyProperties(productDto, productModel);
-//
-//        when(productRepository.save(any(ProductModel.class))).thenReturn(productModel);
-//       ResponseEntity<ProductModel> response = productController.saveProduct(productDto);
-//
-//       assertEquals(HttpStatus.CREATED, response.getStatusCode());
-//        assertEquals(productModel, response.getBody());
-//   }
-//
-//    @Test
-//    public void testGetAllProducts() {
-//        ProductModel productModel = new ProductModel();
-//        UUID id = UUID.randomUUID();
-//        productModel.setIdProduct(id);
-//        when(productRepository.findAll()).thenReturn(Collections.singletonList(productModel));
-//
-//        ResponseEntity<List<ProductModel>> response = productController.getAllProducts();
-//
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//        assertEquals(1, response.getBody().size());
-//        assertEquals(id, response.getBody().get(0).getIdProduct());
-//    }
-//
-//    @Test
-//    public void testGetOneProduct() {
-//        UUID id = UUID.randomUUID();
-//        ProductModel productModel = new ProductModel();
-//        productModel.setIdProduct(id);
-//        when(productRepository.findById(id)).thenReturn(Optional.of(productModel));
-//
-//        ResponseEntity<Object> response = productController.getOneProduct(id);
-//
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//        assertEquals(productModel, response.getBody());
-//    }
-//
-//    @Test
-//    public void testGetOneProductNotFound() {
-//        UUID id = UUID.randomUUID();
-//        when(productRepository.findById(id)).thenReturn(Optional.empty());
-//
-//        ResponseEntity<Object> response = productController.getOneProduct(id);
-//
-//        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-//        assertEquals("Product not found.", response.getBody());
-//    }
-//
-//    @Test
-//    public void testUpdateProduct() {
-//        UUID id = UUID.randomUUID();
-//        ProductRecorDto productDto = new ProductRecorDto();
-//        ProductModel productModel = new ProductModel();
-//        productModel.setIdProduct(id);
-//        when(productRepository.findById(id)).thenReturn(Optional.of(productModel));
-//        when(productRepository.save(any(ProductModel.class))).thenReturn(productModel);
-//
-//        ResponseEntity<Object> response = productController.updateProduct(id, productDto);
-//
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//        assertEquals(productModel, response.getBody());
-//    }
-//
-//    @Test
-//    public void testUpdateProductNotFound() {
-//        UUID id = UUID.randomUUID();
-//        ProductRecorDto productDto = new ProductRecorDto();
-//        when(productRepository.findById(id)).thenReturn(Optional.empty());
-//
-//        ResponseEntity<Object> response = productController.updateProduct(id, productDto);
-//
-//        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-//        assertEquals("Product not found.", response.getBody());
-//    }
-//
-//
-//
-//    @Test
-//    public void testDeleteProduct() {
-//        UUID id = UUID.randomUUID();
-//        ProductModel productModel = new ProductModel();
-//        productModel.setIdProduct(id);
-//        when(productRepository.findById(id)).thenReturn(Optional.of(productModel));
-//
-//        ResponseEntity<Object> response = productController.deleteProduct(id);
-//
-//        assertEquals(HttpStatus.OK, response.getStatusCode());
-//        assertEquals("Product deleted successfully.", response.getBody());
-//        verify(productRepository, times(1)).delete(productModel);
-//    }
-//
-//    @Test
-//    public void testDeleteProductNotFound() {
-//        UUID id = UUID.randomUUID();
-//        when(productRepository.findById(id)).thenReturn(Optional.empty());
-//
-//        ResponseEntity<Object> response = productController.deleteProduct(id);
-//
-//        assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
-//        assertEquals("Product not found.", response.getBody());
-//    }
+    @Autowired
+    private ProductController productController;
 
+    @BeforeEach
+    public void setUp() {
+        MockitoAnnotations.openMocks(this);
+        productController.productRepository = productRepositoryMock;
+    }
+
+    @Test
+    public void testSaveProduct_success() {
+        // Arrange
+        ProductRecorDto productRecordDto = new ProductRecorDto("Test Product", 524.00);
+        ProductModel productModel = new ProductModel();
+
+        when(productRepositoryMock.save(productModel)).thenReturn(productModel);
+
+        // Act
+        ResponseEntity<ProductModel> responseEntity = productController.saveProduct(productRecordDto);
+
+        // Assert
+        assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
+        verify(productRepositoryMock, times(1)).save(productModel);
+    }
+
+    @Test
+    public void testGetAllProducts_success() {
+        // Arrange
+        List<ProductModel> productList = new ArrayList<>();
+        productList.add(new ProductModel());
+        productList.add(new ProductModel());
+
+        when(productRepositoryMock.findAll()).thenReturn(productList);
+
+        // Act
+        ResponseEntity<List<ProductModel>> responseEntity = productController.getAllProducts();
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(productList, responseEntity.getBody());
+        verify(productRepositoryMock, times(1)).findAll();
+    }
+
+    @Test
+    public void testGetAllProducts_emptyList() {
+        // Arrange
+        List<ProductModel> emptyList = new ArrayList<>();
+
+        when(productRepositoryMock.findAll()).thenReturn(emptyList);
+
+        // Act
+        ResponseEntity<List<ProductModel>> responseEntity = productController.getAllProducts();
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertTrue(Objects.requireNonNull(responseEntity.getBody()).isEmpty());
+        verify(productRepositoryMock, times(1)).findAll();
+    }
+
+    @Test
+    public void testGetOneProduct_success() {
+        // Arrange
+        UUID id = UUID.randomUUID();
+        ProductModel productModel = new ProductModel();
+
+        when(productRepositoryMock.findById(id)).thenReturn(Optional.of(productModel));
+
+        // Act
+        ResponseEntity<Object> responseEntity = productController.getOneProduct(id);
+
+        // Assert
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(productModel, responseEntity.getBody());
+        verify(productRepositoryMock, times(1)).findById(id);
+    }
+
+    @Test
+    public void testGetOneProduct_notFound() {
+        // Arrange
+        UUID id = UUID.randomUUID();
+
+        when(productRepositoryMock.findById(id)).thenReturn(Optional.empty());
+
+        // Act
+        ResponseEntity<Object> responseEntity = productController.getOneProduct(id);
+
+        // Assert
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        assertEquals("Product not found.", responseEntity.getBody());
+        verify(productRepositoryMock, times(1)).findById(id);
+    }
+
+    @Test
+    public void testUpdateProduct_success() {
+        // Arrange
+        UUID id = UUID.randomUUID();
+        ProductModel existingProduct = new ProductModel();
+    }
 }
