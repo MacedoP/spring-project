@@ -11,4 +11,5 @@ import java.util.UUID;
 public interface ProductRepository extends JpaRepository<ProductModel, UUID> {
 
 
+
 }
