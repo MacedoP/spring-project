@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.12">
+    <treeWalker>
+        <filter name="imports">
+            <exclude name="java.*" />
+        </filter>
+    </treeWalker>
+    <module name="Newlines">
+        <property name="newlines.eol" value="LF" />
+        <property name="newlines.ignoreEndTrim" value="true" />
+    </module>
+    <module name="Whitespace">
+        <property name="whitespace.tabCharacter" value="4" />
+        <property name="whitespace.lineLength" value="120" />
+        <property name="whitespace.indent" value="4" />
+    </module>
+    <module name="Javadoc">
+        <property name="javadoc.addJavadoc" value="true" />
+        <property name="javadoc.missingJavadoc" value="WARN" />
+        <property name="javadoc.incorrectJavadoc" value="WARN" />
+    </module>
+</checkstyle>
