@@ -15,3 +15,5 @@ entidade JPA e deve ser mapeada para uma tabela em um banco de dados.
 * spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
 * junit => é um ambiente de execucao que permite testar os nosso teste unitarios
 * Mockito => é uma bibliotecas que nos oferece varias ferramentas 
+
+# Jacoco file => é usado para validar a verificacao de test unitatios em um projecto
